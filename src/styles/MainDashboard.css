@@ -25,17 +25,22 @@
     overflow: hidden;
     flex-direction: column;
     flex-grow: 1;
+
 }
 .main-body div {
     margin-top:5%;
-    margin-inline:5%;
     display: flex;
     justify-content:flex-end;
 }
-.main-body div div {
+.main-body h2 {
+    color: rgba(125, 129, 64, 0.8);
+    font-size: 1.3rem;
+    margin:10px;
+    margin-bottom:0px;
+}
+.current-weather-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
 }
 .current-time {
@@ -70,4 +75,39 @@
     margin-right:30px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
+} 
+.future-24-hours-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between!important;
+    width:100%;
+    overflow-x: scroll;
+    user-select: none;
+
+}
+.future-24-hours {
+    display:flex;
+    flex-direction: column;
+    padding: 20px;
+    margin:0;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: aliceblue;
+}
+.future-forecast-container {
+    display: flex;
+    justify-content: space-between!important;
+    flex-direction: row;
+    overflow-x: scroll;
+    user-select: none;
+    
+}
+.day-container {
+    display:flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    margin:0;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: aliceblue;
 }
