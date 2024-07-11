@@ -9,7 +9,6 @@ function MainDashboard() {
   const [city, setCity] = useState(""); // State to store the user's city
   const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState({});
-
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -66,7 +65,6 @@ function MainDashboard() {
             `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}`
           );
           const data = await response.json();
-          console.log(data);
           setWeatherData(data);
           setIsLoading(false);
         } catch (error) {
@@ -79,28 +77,68 @@ function MainDashboard() {
   }, [city]);
   return (
     <section className="main-dashboard">
-      <div className="main-header">
-        <Search onCityChange={setCity}/>
-        <h2>Tucson, Arizona</h2>
-      </div>
-      <div className="main-body">
-        <div>
-          <div className="current-weather-container">
-            <p className="current-time">12:00pm </p>
-            <p className="current-date">June 22nd, 2023</p>
-            <p className="current-temperature">32</p>
+    <div className="main-header">
+      <Search onCityChange={setCity}/>
+      <h2>{city}</h2>
+    </div>
+    <div className="main-body">
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        weatherData.current && (
+          <div>
+            <div className="current-weather-container">
+              <p className="current-time">
+                {weatherData.location && weatherData.location.localtime
+                  ? new Date(weatherData.location.localtime).toLocaleTimeString()
+                  : "N/A"}
+              </p>
+              <p className="current-date">
+                {weatherData.location && weatherData.location.localtime
+                  ? new Date(weatherData.location.localtime).toLocaleDateString()
+                  : "N/A"}
+              </p>
+              <p className="current-temperature">
+                {weatherData.current && weatherData.current.temp_f
+                  ? `${weatherData.current.temp_f}°F`
+                  : "N/A"}
+              </p>
+            </div>
+            <div className="current-weather-container">
+              <p className="current-weather">
+                {weatherData.current && weatherData.current.condition
+                  ? weatherData.current.condition.text
+                  : "N/A"}
+              </p>
+              <p className="current-humidity">
+                Humidity:{" "}
+                {weatherData.current && weatherData.current.humidity
+                  ? `${weatherData.current.humidity}%`
+                  : "N/A"}
+              </p>
+              <p className="current-wind">
+                Wind:{" "}
+                {weatherData.current && weatherData.current.wind_mph
+                  ? `${weatherData.current.wind_mph} mph`
+                  : "N/A"}
+                {weatherData.current && weatherData.current.wind_dir
+                  ? ` (${weatherData.current.wind_dir})`
+                  : ""}
+              </p>
+              <p className="current-uv">
+                UV Index:{" "}
+                {weatherData.current && weatherData.current.uv
+                  ? weatherData.current.uv
+                  : "N/A"}
+              </p>
+            </div>
           </div>
-          <div className="current-weather-container">
-            <p className="current-weather">Sunny</p>
-            <p className="current-humidity">Humidity</p>
-            <p className="current-wind">Wind</p>
-            <p className="current-uv">UV Index</p>
-          </div>
-        </div>
-        <Future24Hours />
-        <FutureForecast />
-      </div>
-    </section>
+        )
+      )}
+      <Future24Hours city={city} />
+      <FutureForecast />
+    </div>
+  </section>
   );
 }
 
