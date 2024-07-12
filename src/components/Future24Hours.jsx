@@ -14,12 +14,10 @@ function Future24Hours({city}) {
           const data = await response.json();
           // Get the current hour
           const currentHour = new Date().getHours();
-          console.log(data,currentHour)
           // Filter the hourly data to get the 24-hour period starting from the next hour
           const filteredData = data.forecast.forecastday[0].hour.filter(
             (hourData) => new Date(hourData.time).getHours() > currentHour
           );
-          console.log(filteredData)
           // If less than 24 hours left in the day, get remaining hours from the next day
           if (filteredData.length < 24) {
             const nextDayData = data.forecast.forecastday[1].hour.filter(

@@ -5,10 +5,12 @@ import Search from "./search.jsx";
 import React, { useState, useEffect } from "react";
 
 function MainDashboard() {
-  const [hourlyData, setHourlyData] = useState([]);
   const [city, setCity] = useState(""); // State to store the user's city
   const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState({});
+  const [timezone, setTimezone] = useState(null);
+  const [localtime, setLocalTime] = useState(null);
+
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -66,6 +68,7 @@ function MainDashboard() {
           );
           const data = await response.json();
           setWeatherData(data);
+          setTimezone(data.location.tz_id);
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching weather data:", error);
@@ -75,6 +78,25 @@ function MainDashboard() {
       fetchWeatherData();
     }
   }, [city]);
+  useEffect(() => {
+    if (timezone) {
+      console.log(timezone)
+      const interval = setInterval(() => {
+        const now = new Date();
+        setLocalTime(
+          new Intl.DateTimeFormat('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: timezone,
+            hourCycle: 'h12',
+          }).format(now)
+        );
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [timezone]);
+
   return (
     <section className="main-dashboard">
     <div className="main-header">
@@ -90,7 +112,7 @@ function MainDashboard() {
             <div className="current-weather-container">
               <p className="current-time">
                 {weatherData.location && weatherData.location.localtime
-                  ? new Date(weatherData.location.localtime).toLocaleTimeString()
+                  ? localtime
                   : "N/A"}
               </p>
               <p className="current-date">
@@ -136,7 +158,7 @@ function MainDashboard() {
         )
       )}
       <Future24Hours city={city} />
-      <FutureForecast />
+      <FutureForecast city={city} />
     </div>
   </section>
   );

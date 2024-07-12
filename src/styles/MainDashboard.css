@@ -35,6 +35,8 @@
 }
 .main-body div {
   display: flex;
+  height: min-content;
+  
 }
 .main-body h2 {
   color: rgba(125, 129, 64, 0.8);
@@ -79,14 +81,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .future-24-hours-container {
-  padding:0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between !important;
-  width: 100%;
-  overflow-x: scroll;
-  user-select: none;
-  overflow-y: hidden;
+  overflow-x:scroll;
 }
 .future-24-hours {
   display: flex;
@@ -96,7 +91,8 @@
   margin: 0;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  background-color: aliceblue;
+  background-color: rgba(120, 77, 77, 0.1);
+  backdrop-filter: blur(30px);
 }
 .future-24-hours p {
   color: rgba(125, 129, 64, 0.8);
@@ -107,18 +103,26 @@
   padding:0;
 }
 .future-forecast-container {
-  display: flex;
-  justify-content: space-between !important;
-  flex-direction: row;
+  margin-block:25px;
   overflow-x: scroll;
-  user-select: none;
+  display:flex;
+  flex-direction: column;
 }
 .day-container {
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 0px 40px;
   margin: 0;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background-color: aliceblue;
+  min-height:100%;
+}
+.day-container p {
+  color: rgba(125, 129, 64, 0.8);
+  font-size: 1.3rem;
+  margin: 0;
+  margin-top: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding:0;
 }
