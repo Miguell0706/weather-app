@@ -10,7 +10,7 @@ function MainDashboard() {
   const [weatherData, setWeatherData] = useState({});
   const [timezone, setTimezone] = useState(null);
   const [localtime, setLocalTime] = useState(null);
-
+  const [formattedDate, setFormattedDate] = useState(null);
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -69,6 +69,11 @@ function MainDashboard() {
           const data = await response.json();
           setWeatherData(data);
           setTimezone(data.location.tz_id);
+          setFormattedDate(new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }).format(new Date(data.location.localtime)));
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching weather data:", error);
@@ -79,18 +84,21 @@ function MainDashboard() {
     }
   }, [city]);
   useEffect(() => {
+    
     if (timezone) {
-      console.log(timezone)
       const interval = setInterval(() => {
         const now = new Date();
-        setLocalTime(
-          new Intl.DateTimeFormat('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZone: timezone,
-            hourCycle: 'h12',
-          }).format(now)
-        );
+        let formattedTime = new Intl.DateTimeFormat('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZone: timezone,
+          hourCycle: 'h12',
+        }).format(now);
+        
+        // Remove leading zero from hour
+        formattedTime = formattedTime.replace(/^0/, '');
+  
+        setLocalTime(formattedTime);
       }, 1000);
 
       return () => clearInterval(interval);
@@ -117,7 +125,7 @@ function MainDashboard() {
               </p>
               <p className="current-date">
                 {weatherData.location && weatherData.location.localtime
-                  ? new Date(weatherData.location.localtime).toLocaleDateString()
+                  ? formattedDate
                   : "N/A"}
               </p>
               <p className="current-temperature">
