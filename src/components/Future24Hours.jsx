@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-function Future24Hours({city}) {
+function Future24Hours({city, temp_unit}) {
   const [futureData, setFutureData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -51,9 +51,23 @@ function Future24Hours({city}) {
     const date = new Date(time);
     return date.getDate() === now.getDate() + 1;
   };
-  const formatTemp = (temp) => {
-    return Math.round(temp);
-  }
+  useEffect(() => {
+    let temps = document.querySelectorAll('.daily-temp');
+
+    temps.forEach((temp) => {
+      const tempF = parseFloat(temp.dataset.tempF);
+      temp.textContent = `${convertTemperature(tempF)}`;
+    });
+  }, [temp_unit]);
+
+  const convertTemperature = (tempF) => {
+    switch (temp_unit) {
+      case '°C':
+        return `${Math.round((tempF - 32) * 5 / 9)} °C`;
+      default:
+        return `${Math.round(tempF)} °F`;
+    }
+  };
   return (
     <div>
       {isLoading ? (
@@ -64,7 +78,7 @@ function Future24Hours({city}) {
             <div className='future-24-hours' key={index}>
               {isTomorrow(hourData.time) && <p>Tomorrow</p>}
               <p>{formatTime(hourData.time)}</p>
-              <p>{formatTemp(hourData.temp_f)}°f</p>
+              <p className='daily-temp' data-temp-f={hourData.temp_f}>{convertTemperature(hourData.temp_f)}</p>
               <p>{hourData.condition.text}</p>
             </div>
           ))}

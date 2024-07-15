@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function FutureForecast({ city }) {
+function FutureForecast({ city, temp_unit }) {
   const [forecast, setForecast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,8 +27,23 @@ function FutureForecast({ city }) {
       fetchForecast();
     }
   }, [city]);
-  const formatTemp = (temp) => {
-    return Math.round(temp);
+
+  useEffect(() => {
+    let temps = document.querySelectorAll('.temperature');
+
+    temps.forEach((temp) => {
+      const tempF = parseFloat(temp.dataset.tempF);
+      temp.textContent = `${convertTemperature(tempF)}`;
+    });
+  }, [temp_unit]);
+
+  const convertTemperature = (tempF) => {
+    switch (temp_unit) {
+      case '°C':
+        return `${Math.round((tempF - 32) * 5 / 9)} °C`;
+      default:
+        return `${Math.round(tempF)} °F`;
+    }
   };
   return (
     <div className="future-forecast-container">
@@ -40,7 +55,7 @@ function FutureForecast({ city }) {
           {forecast.map((day, index) => (
             <div key={index} className="day-container">
               <p className="day">{new Date(day.date).toLocaleDateString('en-US', { weekday: 'long' })}</p>
-              <p className="temperature">{formatTemp(day.day.avgtemp_f)}°f</p>
+              <p className="temperature" data-temp-f={day.day.avgtemp_f}>{convertTemperature(day.day.avgtemp_f)}</p>
               <p className="weather">{day.day.condition.text}</p>
             </div>
           ))}

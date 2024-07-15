@@ -82,6 +82,7 @@
 }
 .future-24-hours-container {
   overflow-x:scroll;
+  user-select: none;
 }
 .future-24-hours {
   display: flex;
@@ -107,6 +108,7 @@
   overflow-x: scroll;
   display:flex;
   flex-direction: column;
+  user-select: none;
 }
 .day-container {
   display: flex;

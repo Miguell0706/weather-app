@@ -3,7 +3,7 @@ import Future24Hours from "./Future24Hours.jsx";
 import FutureForecast from "./FutureForecast.jsx";
 import Search from "./search.jsx";
 import React, { useState, useEffect } from "react";
-
+import TempButtons from "./TempButtons.jsx";
 function MainDashboard() {
   const [city, setCity] = useState(""); // State to store the user's city
   const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +12,7 @@ function MainDashboard() {
   const [localtime, setLocalTime] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
   const [formattedTemp, setFormattedTemp] = useState(null);
+  const [temp_unit, setTempUnit] = useState("°F");
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -120,6 +121,7 @@ function MainDashboard() {
         weatherData.current && (
           <div>
             <div className="current-weather-container">
+
               <p className="current-time">
                 {weatherData.location && weatherData.location.localtime
                   ? localtime
@@ -130,9 +132,10 @@ function MainDashboard() {
                   ? formattedDate
                   : "N/A"}
               </p>
+              <TempButtons setTempUnit={setTempUnit} weatherData={weatherData} setFormattedTemp={setFormattedTemp}/>
               <p className="current-temperature">
                 {weatherData.current && weatherData.current.temp_f
-                  ? `${formattedTemp}°F`
+                  ? `${formattedTemp}${temp_unit}`
                   : "N/A"}
               </p>
             </div>
@@ -167,8 +170,8 @@ function MainDashboard() {
           </div>
         )
       )}
-      <Future24Hours city={city} />
-      <FutureForecast city={city} />
+      <Future24Hours temp_unit={temp_unit} city={city} />
+      <FutureForecast temp_unit={temp_unit} city={city} />
     </div>
   </section>
   );
