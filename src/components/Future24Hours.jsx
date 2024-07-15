@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 function Future24Hours({city}) {
   const [futureData, setFutureData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     if (city) {
       const fetchFutureData = async () => {
@@ -37,6 +36,24 @@ function Future24Hours({city}) {
     }
   }, [city]);
 
+  const formatTime = (time) => {
+    const date = new Date(time);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const isTomorrow = (time) => {
+    const now = new Date();
+    const date = new Date(time);
+    return date.getDate() === now.getDate() + 1;
+  };
+  const formatTemp = (temp) => {
+    return Math.round(temp);
+  }
   return (
     <div>
       {isLoading ? (
@@ -45,8 +62,9 @@ function Future24Hours({city}) {
         <div className='future-24-hours-container'>
           {futureData.map((hourData, index) => (
             <div className='future-24-hours' key={index}>
-              <p>{hourData.time}</p>
-              <p>{hourData.temp_f}°F</p>
+              {isTomorrow(hourData.time) && <p>Tomorrow</p>}
+              <p>{formatTime(hourData.time)}</p>
+              <p>{formatTemp(hourData.temp_f)}°f</p>
               <p>{hourData.condition.text}</p>
             </div>
           ))}

@@ -11,6 +11,7 @@ function MainDashboard() {
   const [timezone, setTimezone] = useState(null);
   const [localtime, setLocalTime] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
+  const [formattedTemp, setFormattedTemp] = useState(null);
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -74,6 +75,7 @@ function MainDashboard() {
             month: 'long',
             day: 'numeric'
           }).format(new Date(data.location.localtime)));
+          setFormattedTemp(Math.round(data.current.temp_f));
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching weather data:", error);
@@ -96,7 +98,7 @@ function MainDashboard() {
         }).format(now);
         
         // Remove leading zero from hour
-        formattedTime = formattedTime.replace(/^0/, '');
+        formattedTime = formattedTime.replace('0', '');
   
         setLocalTime(formattedTime);
       }, 1000);
@@ -130,7 +132,7 @@ function MainDashboard() {
               </p>
               <p className="current-temperature">
                 {weatherData.current && weatherData.current.temp_f
-                  ? `${weatherData.current.temp_f}°F`
+                  ? `${formattedTemp}°F`
                   : "N/A"}
               </p>
             </div>
