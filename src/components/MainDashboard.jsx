@@ -76,7 +76,12 @@ function MainDashboard() {
             month: 'long',
             day: 'numeric'
           }).format(new Date(data.location.localtime)));
-          setFormattedTemp(Math.round(data.current.temp_f));
+          if (temp_unit === "°F") {
+            setFormattedTemp(Math.round(data.current.temp_f));
+          }
+          if (temp_unit === "°C") {
+            setFormattedTemp(Math.round(data.current.temp_c));
+          }
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching weather data:", error);

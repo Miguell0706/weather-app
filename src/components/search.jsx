@@ -8,6 +8,7 @@ const loadOptions = async (inputValue, loadedOptions) => {
     );
     const responseJSON = await response.json();
 
+
     return {
       options: responseJSON.map((city) => ({
         label: city.name + ", " + city.region,
@@ -28,7 +29,6 @@ function Search({ onCityChange }) {
   const [search, setSearch] = useState(null);
 
   const handleOnChange = (selectedOption) => {
-    console.log('Selected Option:', selectedOption);
     setSearch(selectedOption);
     onCityChange(selectedOption.label.split(",")[0]);
   };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 function Future24Hours({city, temp_unit}) {
   const [futureData, setFutureData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [todays_date, setTodaysDate] = useState('')
   useEffect(() => {
     if (city) {
       const fetchFutureData = async () => {
@@ -11,8 +12,10 @@ function Future24Hours({city, temp_unit}) {
             `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=2`
           );
           const data = await response.json();
+          setTodaysDate(data.forecast.forecastday[0].date)
           // Get the current hour
-          const currentHour = new Date().getHours();
+          const locationTime = new Date(data.location.localtime);
+          const currentHour = locationTime.getHours();
           // Filter the hourly data to get the 24-hour period starting from the next hour
           const filteredData = data.forecast.forecastday[0].hour.filter(
             (hourData) => new Date(hourData.time).getHours() > currentHour
@@ -47,9 +50,9 @@ function Future24Hours({city, temp_unit}) {
   };
 
   const isTomorrow = (time) => {
-    const now = new Date();
-    const date = new Date(time);
-    return date.getDate() === now.getDate() + 1;
+    const date = new Date(time.split(' ')[0]);
+    const todays_date_object = new Date(todays_date);
+    return date.getDate() === todays_date_object.getDate() + 1;
   };
   useEffect(() => {
     let temps = document.querySelectorAll('.daily-temp');

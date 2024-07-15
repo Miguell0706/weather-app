@@ -10,13 +10,13 @@ function FutureForecast({ city, temp_unit }) {
         setIsLoading(true);
         try {
           const response = await fetch(
-            `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=5`
+            `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=7`
           );
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
           const data = await response.json();
-          setForecast(data.forecast.forecastday);
+          setForecast(data.forecast.forecastday.slice(2));
         } catch (error) {
           console.error('Error fetching the weather data:', error);
         } finally {
