@@ -27,7 +27,9 @@ function FutureForecast({ city }) {
       fetchForecast();
     }
   }, [city]);
-
+  const formatTemp = (temp) => {
+    return Math.round(temp);
+  };
   return (
     <div className="future-forecast-container">
       <h2>5-Day Forecast for {city}</h2>
@@ -38,7 +40,7 @@ function FutureForecast({ city }) {
           {forecast.map((day, index) => (
             <div key={index} className="day-container">
               <p className="day">{new Date(day.date).toLocaleDateString('en-US', { weekday: 'long' })}</p>
-              <p className="temperature">{day.day.avgtemp_f}°f</p>
+              <p className="temperature">{formatTemp(day.day.avgtemp_f)}°f</p>
               <p className="weather">{day.day.condition.text}</p>
             </div>
           ))}
