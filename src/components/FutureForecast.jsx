@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function FutureForecast({ city, temp_unit }) {
   const [forecast, setForecast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const containerRef = useRef(null);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   useEffect(() => {
     if (city) {
@@ -27,7 +31,60 @@ function FutureForecast({ city, temp_unit }) {
       fetchForecast();
     }
   }, [city]);
+  useEffect(() => {
+    const attachEventListeners = () => {
+      const future_forecast_container = containerRef.current;
+      console.log(future_forecast_container);
 
+      if (future_forecast_container) {
+        const mouseDownHandler = (e) => {
+          isDown.current = true;
+          startX.current = e.pageX - future_forecast_container.offsetLeft;
+          scrollLeft.current = future_forecast_container.scrollLeft;
+          future_forecast_container.style.cursor = 'grabbing';
+          console.log('Mouse Down:', startX.current, scrollLeft.current);
+        };
+
+        const mouseLeaveHandler = () => {
+          isDown.current = false;
+          future_forecast_container.style.cursor = 'grab';
+          console.log('mouse leave');
+        };
+
+        const mouseUpHandler = () => {
+          isDown.current = false;
+          future_forecast_container.style.cursor = 'grab';
+          console.log('mouse up');
+        };
+
+        const mouseMoveHandler = (e) => {
+          if (!isDown.current) return;
+          e.preventDefault();
+          const x = e.pageX - future_forecast_container.offsetLeft;
+          const walk = (x - startX.current) * 3; // Adjust the scroll speed
+          future_forecast_container.scrollLeft = scrollLeft.current-walk
+          console.log("Mouse Move: ", x, walk, future_forecast_container.scrollLeft);
+
+        };
+
+        future_forecast_container.addEventListener('mousedown', mouseDownHandler);
+        future_forecast_container.addEventListener('mouseleave', mouseLeaveHandler);
+        future_forecast_container.addEventListener('mouseup', mouseUpHandler);
+        future_forecast_container.addEventListener('mousemove', mouseMoveHandler);
+
+        return () => {
+          future_forecast_container.removeEventListener('mousedown', mouseDownHandler);
+          future_forecast_container.removeEventListener('mouseleave', mouseLeaveHandler);
+          future_forecast_container.removeEventListener('mouseup', mouseUpHandler);
+          future_forecast_container.removeEventListener('mousemove', mouseMoveHandler);
+        };
+      }
+    };
+
+    const timeoutId = setTimeout(attachEventListeners, 400); // Delay to ensure DOM is ready
+
+    return () => clearTimeout(timeoutId);
+  }, [containerRef]);
   useEffect(() => {
     let temps = document.querySelectorAll('.temperature');
 
@@ -46,7 +103,7 @@ function FutureForecast({ city, temp_unit }) {
     }
   };
   return (
-    <div className="future-forecast-container">
+    <div className="future-forecast-container" ref={containerRef}>
       <h2>5-Day Forecast for {city}</h2>
       {isLoading ? (
         <p>Loading...</p>

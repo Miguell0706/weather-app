@@ -104,10 +104,10 @@ function MainDashboard() {
         }).format(now);
         
         // Remove leading zero from hour
-        formattedTime = formattedTime.replace('0', '');
+        formattedTime = formattedTime.replace(/^0(\d)/, '$1');
   
         setLocalTime(formattedTime);
-      }, 1000);
+      }, 2000);
 
       return () => clearInterval(interval);
     }

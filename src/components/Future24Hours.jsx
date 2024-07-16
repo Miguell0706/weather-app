@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
-function Future24Hours({city, temp_unit}) {
+import React, { useState, useEffect, useRef} from "react";
+
+function Future24Hours({ city, temp_unit }) {
   const [futureData, setFutureData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [todays_date, setTodaysDate] = useState('')
+  const [todays_date, setTodaysDate] = useState('');
+  const containerRef = useRef(null);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
   useEffect(() => {
     if (city) {
       const fetchFutureData = async () => {
@@ -12,15 +18,14 @@ function Future24Hours({city, temp_unit}) {
             `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=2`
           );
           const data = await response.json();
-          setTodaysDate(data.forecast.forecastday[0].date)
-          // Get the current hour
+          setTodaysDate(data.forecast.forecastday[0].date);
+
           const locationTime = new Date(data.location.localtime);
           const currentHour = locationTime.getHours();
-          // Filter the hourly data to get the 24-hour period starting from the next hour
           const filteredData = data.forecast.forecastday[0].hour.filter(
             (hourData) => new Date(hourData.time).getHours() > currentHour
           );
-          // If less than 24 hours left in the day, get remaining hours from the next day
+
           if (filteredData.length < 24) {
             const nextDayData = data.forecast.forecastday[1].hour.filter(
               (hourData) => new Date(hourData.time).getHours() <= currentHour
@@ -39,6 +44,69 @@ function Future24Hours({city, temp_unit}) {
     }
   }, [city]);
 
+  useEffect(() => {
+    const attachEventListeners = () => {
+      const future_24_hours_container = containerRef.current;
+      console.log(future_24_hours_container);
+
+      if (future_24_hours_container) {
+        const mouseDownHandler = (e) => {
+          isDown.current = true;
+          startX.current = e.pageX - future_24_hours_container.offsetLeft;
+          scrollLeft.current = future_24_hours_container.scrollLeft;
+          future_24_hours_container.style.cursor = 'grabbing';
+          console.log('Mouse Down:', startX.current, scrollLeft.current);
+        };
+
+        const mouseLeaveHandler = () => {
+          isDown.current = false;
+          future_24_hours_container.style.cursor = 'grab';
+          console.log('mouse leave');
+        };
+
+        const mouseUpHandler = () => {
+          isDown.current = false;
+          future_24_hours_container.style.cursor = 'grab';
+          console.log('mouse up');
+        };
+
+        const mouseMoveHandler = (e) => {
+          if (!isDown.current) return;
+          e.preventDefault();
+          const x = e.pageX - future_24_hours_container.offsetLeft;
+          const walk = (x - startX.current) * 3; // Adjust the scroll speed
+          future_24_hours_container.scrollLeft = scrollLeft.current-walk
+          console.log("Mouse Move: ", x, walk, future_24_hours_container.scrollLeft);
+
+        };
+
+        future_24_hours_container.addEventListener('mousedown', mouseDownHandler);
+        future_24_hours_container.addEventListener('mouseleave', mouseLeaveHandler);
+        future_24_hours_container.addEventListener('mouseup', mouseUpHandler);
+        future_24_hours_container.addEventListener('mousemove', mouseMoveHandler);
+
+        return () => {
+          future_24_hours_container.removeEventListener('mousedown', mouseDownHandler);
+          future_24_hours_container.removeEventListener('mouseleave', mouseLeaveHandler);
+          future_24_hours_container.removeEventListener('mouseup', mouseUpHandler);
+          future_24_hours_container.removeEventListener('mousemove', mouseMoveHandler);
+        };
+      }
+    };
+
+    const timeoutId = setTimeout(attachEventListeners, 400); // Delay to ensure DOM is ready
+
+    return () => clearTimeout(timeoutId);
+  }, [containerRef]);
+  useEffect(() => {
+    const temps = document.querySelectorAll('.daily-temp');
+
+    temps.forEach((temp) => {
+      const tempF = parseFloat(temp.dataset.tempF);
+      temp.textContent = `${convertTemperature(tempF)}`;
+    });
+  }, [temp_unit]);
+
   const formatTime = (time) => {
     const date = new Date(time);
     const hours = date.getHours();
@@ -54,14 +122,6 @@ function Future24Hours({city, temp_unit}) {
     const todays_date_object = new Date(todays_date);
     return date.getDate() === todays_date_object.getDate() + 1;
   };
-  useEffect(() => {
-    let temps = document.querySelectorAll('.daily-temp');
-
-    temps.forEach((temp) => {
-      const tempF = parseFloat(temp.dataset.tempF);
-      temp.textContent = `${convertTemperature(tempF)}`;
-    });
-  }, [temp_unit]);
 
   const convertTemperature = (tempF) => {
     switch (temp_unit) {
@@ -71,20 +131,21 @@ function Future24Hours({city, temp_unit}) {
         return `${Math.round(tempF)} °F`;
     }
   };
+
   return (
-    <div>
+    <div className='future-24-hours-container' ref={containerRef}>
       {isLoading ? (
         <p>Loading future data...</p>
       ) : (
-        <div className='future-24-hours-container'>
+        <div>
           {futureData.map((hourData, index) => (
-            <div className='future-24-hours' key={index}>
-              {isTomorrow(hourData.time) && <p>Tomorrow</p>}
-              <p>{formatTime(hourData.time)}</p>
-              <p className='daily-temp' data-temp-f={hourData.temp_f}>{convertTemperature(hourData.temp_f)}</p>
-              <p>{hourData.condition.text}</p>
-            </div>
-          ))}
+              <div className='future-24-hours' key={index}>
+                {isTomorrow(hourData.time) && <p>Tomorrow</p>}
+                <p>{formatTime(hourData.time)}</p>
+                <p className='daily-temp' data-temp-f={hourData.temp_f}>{convertTemperature(hourData.temp_f)}</p>
+                <p>{hourData.condition.text}</p>
+              </div>
+            ))} 
         </div>
       )}
     </div>
