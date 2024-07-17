@@ -1,5 +1,4 @@
 .main-dashboard {
-  background-color: rgb(26, 26, 26);
   position: relative;
   width: 100%;
   height: 100vh;
@@ -8,6 +7,35 @@
   display: flex;
   flex-direction: column;
 }
+
+.weather-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.background-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  background-size: cover;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 20px;
+}
+
 .search {
   width: 250px;
   color: black;
@@ -81,8 +109,12 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .future-24-hours-container {
-  overflow-x:scroll;
-  user-select: none;
+  user-select: none; 
+  overflow-x: scroll;
+}
+.future-24-hours-container::-webkit-scrollbar {
+  display: none;
+
 }
 .future-24-hours {
   display: flex;
@@ -94,6 +126,9 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background-color: rgba(120, 77, 77, 0.1);
   backdrop-filter: blur(30px);
+  min-width: 140px;
+  min-height: 160px;
+  max-height: 160px;
 }
 .future-24-hours p {
   color: rgba(125, 129, 64, 0.8);
@@ -110,6 +145,9 @@
   flex-direction: column;
   user-select: none;
 }
+.future-forecast-container::-webkit-scrollbar {
+  display: none;
+}
 .day-container {
   display: flex;
   flex-direction: column;
@@ -119,6 +157,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background-color: aliceblue;
   min-height:100%;
+  min-width: 170px;
 }
 .day-container p {
   color: rgba(125, 129, 64, 0.8);

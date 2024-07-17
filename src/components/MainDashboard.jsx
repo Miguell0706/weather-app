@@ -1,11 +1,14 @@
-import "../styles/MainDashboard.css"; // Adjusted import path
+import "../styles/MainDashboard.css"; 
 import Future24Hours from "./Future24Hours.jsx";
 import FutureForecast from "./FutureForecast.jsx";
 import Search from "./search.jsx";
+import Background from "./Background.jsx";
 import React, { useState, useEffect } from "react";
 import TempButtons from "./TempButtons.jsx";
+
+// BEGINING OF MAIN FUNCTION ====================================================>
 function MainDashboard() {
-  const [city, setCity] = useState(""); // State to store the user's city
+  const [city, setCity] = useState(""); 
   const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState({});
   const [timezone, setTimezone] = useState(null);
@@ -13,17 +16,19 @@ function MainDashboard() {
   const [formattedDate, setFormattedDate] = useState(null);
   const [formattedTemp, setFormattedTemp] = useState(null);
   const [temp_unit, setTempUnit] = useState("°F");
+
+// Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             (async () => {
-              const latitude = position.coords.latitude; // Example latitude
-              const longitude = position.coords.longitude; // Example longitude
+              const latitude = position.coords.latitude; 
+              const longitude = position.coords.longitude; 
               try {
                 const city = await getCityName(latitude, longitude);
-                setCity(city); // Outputs the city name or null if not found
+                setCity(city); 
               } catch (error) {
                 console.error("Error:", error);
               }
@@ -31,7 +36,6 @@ function MainDashboard() {
           },
           (error) => {
             console.error("Error getting location:", error);
-            // Default to a specific city if location access is denied
           },
           {
             enableHighAccuracy: true, // Request high accuracy mode
@@ -53,15 +57,16 @@ function MainDashboard() {
         }
       } else {
         console.error("Geolocation is not supported by this browser.");
-        // Default to a specific city if geolocation is not supported
-        console.log("location denied"); // Tucson, AZ coordinates
+        console.log("location denied"); 
       }
     };
     getLocation();
   }, []);
+  // FUNCTION TO CHANGE THE BACKGROOUND BASED ON THE CURRENT WEATHER CONDITIONS AND TIME===========================>
+
+  // Function to fetch weather data for the selected city (by default uses device's current location at first) fomratiing is done here as well for data=====================================>
   useEffect(() => {
     if (city) {
-      // Fetch weather data for the selected city
       const fetchWeatherData = async () => {
         setIsLoading(true);
         try {
@@ -76,7 +81,12 @@ function MainDashboard() {
             month: 'long',
             day: 'numeric'
           }).format(new Date(data.location.localtime)));
-          setFormattedTemp(Math.round(data.current.temp_f));
+          if (temp_unit === "°F") {
+            setFormattedTemp(Math.round(data.current.temp_f));
+          }
+          if (temp_unit === "°C") {
+            setFormattedTemp(Math.round(data.current.temp_c));
+          }
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching weather data:", error);
@@ -86,6 +96,7 @@ function MainDashboard() {
       fetchWeatherData();
     }
   }, [city]);
+  // Function to update the local time every 2 seconds, update everytime there is a new city changed that has a different timezone==================================>
   useEffect(() => {
     
     if (timezone) {
@@ -99,17 +110,18 @@ function MainDashboard() {
         }).format(now);
         
         // Remove leading zero from hour
-        formattedTime = formattedTime.replace('0', '');
+        formattedTime = formattedTime.replace(/^0(\d)/, '$1');
   
         setLocalTime(formattedTime);
-      }, 1000);
+      }, 2000);
 
       return () => clearInterval(interval);
     }
   }, [timezone]);
-
+  // FUNCTION TO RETURN ALL THE JSX NEEDED FOR THE MAIN DASHBOARD=====================================>
   return (
-    <section className="main-dashboard">
+  <section className="main-dashboard">
+    {weatherData.current && <Background weatherData={weatherData} />}
     <div className="main-header">
       <Search onCityChange={setCity}/>
       <h2>{city}</h2>
