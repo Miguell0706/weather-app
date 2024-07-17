@@ -62,8 +62,6 @@ function MainDashboard() {
     };
     getLocation();
   }, []);
-  // FUNCTION TO CHANGE THE BACKGROOUND BASED ON THE CURRENT WEATHER CONDITIONS AND TIME===========================>
-
   // Function to fetch weather data for the selected city (by default uses device's current location at first) fomratiing is done here as well for data=====================================>
   useEffect(() => {
     if (city) {
