@@ -39,7 +39,11 @@
 .search {
   width: 250px;
   color: black;
-  padding: 5px;
+  border-radius: 10px;;
+  border: 5px solid rgba(120, 77, 77, 0.3);
+  background-color: white;
+  margin:5px;
+  
 }
 
 .main-header {
@@ -51,7 +55,17 @@
   justify-content: space-between;
   padding: 0 20px;
 }
-
+.main-header h2 {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 2.1rem;
+  margin: 10px;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+  
+}
 .main-body {
   width: 100%;
   height: fit-content;
@@ -60,31 +74,28 @@
   overflow: hidden;
   flex-direction: column;
   flex-grow: 1;
+
 }
 .main-body div {
   display: flex;
   height: min-content;
   
 }
-.main-body h2 {
-  color: rgba(125, 129, 64, 0.8);
-  font-size: 1.3rem;
-  margin: 10px;
-  margin-bottom: 0px;
-}
 .current-weather-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  width:50%;
+  margin-block:20px;
 }
 .current-time {
-  color: white;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 2.2rem;
-  font-weight: 700;
-  margin: 10px;
-  padding: 0px;
-  margin-right: 60%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 .current-date {
   color: rgba(125, 129, 64, 0.8);
@@ -93,20 +104,33 @@
   margin-right: 55%;
   padding: 0px;
   width: max-content;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 .current-temperature {
   color: white;
   font-size: 5rem;
   font-weight: 700;
   margin-right: 60%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+  align-self:flex-start;
 }
 .current-weather {
   color: rgba(125, 129, 64, 0.8);
   font-size: 1.3rem;
   margin-right: 30px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 .future-24-hours-container {
   user-select: none; 
@@ -122,7 +146,11 @@
   padding-inline: 20px;
   margin: 0;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
   background-color: rgba(120, 77, 77, 0.1);
   backdrop-filter: blur(30px);
   min-width: 140px;
@@ -134,7 +162,11 @@
   font-size: 1.3rem;
   margin: 0;
   margin-top: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
   padding:0;
 }
 .future-forecast-container {
@@ -153,7 +185,11 @@
   padding: 0px 40px;
   margin: 0;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
   background-color: aliceblue;
   min-height:100%;
   min-width: 170px;
@@ -163,6 +199,10 @@
   font-size: 1.3rem;
   margin: 0;
   margin-top: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
   padding:0;
 }
