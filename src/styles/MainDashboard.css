@@ -1,3 +1,7 @@
+:root {
+  --text-border :2px 0 #000000, -2px 0 #000000, 0 2px #000000, 0 -2px #000000, 1px 1px #000000,
+  -1px -1px #000000, 1px -1px #000000, -1px 1px #000000;
+}
 .main-dashboard {
   position: relative;
   width: 100%;
@@ -39,11 +43,10 @@
 .search {
   width: 250px;
   color: black;
-  border-radius: 10px;;
+  border-radius: 10px;
   border: 5px solid rgba(120, 77, 77, 0.3);
   background-color: white;
-  margin:5px;
-  
+  margin: 5px;
 }
 
 .main-header {
@@ -56,85 +59,96 @@
   padding: 0 20px;
 }
 .main-header h2 {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2.1rem;
   margin: 10px;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  
+  text-shadow: var(--text-border)
 }
 .main-body {
   width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   flex-direction: column;
   flex-grow: 1;
-
 }
 .main-body div {
   display: flex;
   height: min-content;
-  
 }
 .current-weather-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:50%;
-  margin-block:20px;
+  width: 50%;
+  margin-block: 20px;
 }
 .current-time {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  padding: 0;
   font-size: 2.2rem;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+  letter-spacing: 5px;
+  text-shadow: var(--text-border)
 }
 .current-date {
-  color: rgba(125, 129, 64, 0.8);
-  font-size: 1.3rem;
-  margin: 0px;
-  margin-right: 55%;
-  padding: 0px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.4rem;
   width: max-content;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+  margin: 0;
+  letter-spacing: 3px;
+  text-shadow: var(--text-border)
+}
+.temp-unit-change-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin-block: 20px;
+  margin: 5px;
+}
+.temp-unit-change-container button {
+  background-color: rgba(120, 77, 77, 0.3);
+  color: white;
+  border: 3px solid rgba(120, 77, 77, 0.3);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  margin: 5px;
+}
+.temp-unit-change-container button:hover {
+  background-color: rgba(120, 77, 77, 0.5);
 }
 .current-temperature {
   color: white;
   font-size: 5rem;
+  margin: 20px;
   font-weight: 700;
-  margin-right: 60%;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  align-self:flex-start;
+  text-shadow: var(--text-border); 
+}
+.current-humidity,
+.current-wind,
+.current-uv {
+  margin: 20px;
+  font-size: 1.2rem;
+  text-shadow: var(--text-border);
+  color: rgba(255, 255, 255, 0.8);
+
+
+
 }
 .current-weather {
-  color: rgba(125, 129, 64, 0.8);
-  font-size: 1.3rem;
-  margin-right: 30px;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  margin:20px;
+  text-shadow:var(--text-border);
+  
 }
 .future-24-hours-container {
-  user-select: none; 
+  margin-block: 25px;
+  user-select: none;
   overflow-x: scroll;
+  overflow-y: hidden;
+  height: 250px;
 }
 .future-24-hours-container::-webkit-scrollbar {
   display: none;
@@ -142,39 +156,46 @@
 .future-24-hours {
   display: flex;
   flex-direction: column;
-  padding:0;
   padding-inline: 20px;
   margin: 0;
   text-align: center;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  background-color: rgba(120, 77, 77, 0.1);
+  text-shadow: var(--text-border);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
   backdrop-filter: blur(30px);
   min-width: 140px;
-  min-height: 160px;
-  max-height: 160px;
+  min-height: 250px;
+  max-height: 250px;
 }
-.future-24-hours p {
-  color: rgba(125, 129, 64, 0.8);
+.hourly-time,
+.hourly-temp,
+.hourly-condition,
+.hourly-tomorrow {
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.3rem;
   margin: 0;
   margin-top: 10px;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  padding:0;
+  text-shadow: var(--text-border);
+
+}
+
+.hourly-time,
+.hourly-tomorrow {
+  font-size:1.45rem;
+  color: rgba(255,255,255,0.7)
+
 }
 .future-forecast-container {
-  margin-block:25px;
+  margin-block: 50px;
   overflow-x: scroll;
-  display:flex;
+  display: flex;
   flex-direction: column;
   user-select: none;
+}
+.future-forecast-container h2 {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.9rem;
+  margin: 10px;
+  text-shadow: var(--text-border);
 }
 .future-forecast-container::-webkit-scrollbar {
   display: none;
@@ -182,27 +203,29 @@
 .day-container {
   display: flex;
   flex-direction: column;
-  padding: 0px 40px;
+  padding: 0;
+  padding-inline: 20px;
   margin: 0;
   text-align: center;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  background-color: aliceblue;
-  min-height:100%;
-  min-width: 170px;
+  text-shadow:var(--text-border);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  backdrop-filter: blur(30px);
+  min-width: 185px;
+  min-height: 160px;
+  max-height: 160px;
 }
-.day-container p {
-  color: rgba(125, 129, 64, 0.8);
+.temperature,
+.weather,
+.day {
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.3rem;
   margin: 0;
   margin-top: 10px;
-  text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-  padding:0;
+  text-shadow: var(--text-border);
+}
+
+.day {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+
 }

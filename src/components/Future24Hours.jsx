@@ -157,12 +157,12 @@ function Future24Hours({ city, temp_unit }) {
         <div>
           {futureData.map((hourData, index) => (
             <div className="future-24-hours" key={index}>
-              {isTomorrow(hourData.time) && <p>Tomorrow</p>}
-              <p>{formatTime(hourData.time)}</p>
-              <p className="daily-temp" data-temp-f={hourData.temp_f}>
+              {isTomorrow(hourData.time) && <p className='hourly-tomorrow'>Tomorrow</p>}
+              <p className='hourly-time'>{formatTime(hourData.time)}</p>
+              <p className="hourly-temp" data-temp-f={hourData.temp_f}>
                 {convertTemperature(hourData.temp_f)}
               </p>
-              <p>{hourData.condition.text}</p>
+              <p className='hourly-condition'>{hourData.condition.text}</p>
             </div>
           ))}
         </div>
