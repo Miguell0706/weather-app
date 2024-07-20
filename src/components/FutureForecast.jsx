@@ -135,6 +135,7 @@ function FutureForecast({ city, temp_unit }) {
                 {convertTemperature(day.day.avgtemp_f)}
               </p>
               <p className="weather">{day.day.condition.text}</p>
+              <img className='daily-icon' src={day.day.condition.icon}></img>
             </div>
           ))}
         </div>
