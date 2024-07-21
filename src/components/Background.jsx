@@ -27,15 +27,13 @@ const Background = ({ weatherData }) => {
             const isDay = weatherData.current.is_day === 1;
             const weatherCondition = weatherData.current.condition.text.toLowerCase();
     
-            console.log(`Weather Condition: ${weatherCondition}, isDay: ${isDay}`);
-    
             let newVideoSource = clearNight; // Default to clearNight
 
             if (["clear", "sunny"].includes(weatherCondition)) {
                 newVideoSource = isDay ? clear : clearNight;
-            } else if (["partly cloudy","patchy rain nearby"].includes(weatherCondition)) {
+            } else if (["partly cloudy",].includes(weatherCondition)) {
                 newVideoSource = isDay ? partlyCloudy : cloudyNight;
-            } else if (["cloudy", "thundery outbreaks possible"].includes(weatherCondition)) {
+            } else if (["cloudy","patchy rain nearby", "thundery outbreaks possible"].includes(weatherCondition)) {
                 newVideoSource = isDay ? cloudy : cloudyNight;
             } else if (["overcast"].includes(weatherCondition)) {
                 newVideoSource = overcast;

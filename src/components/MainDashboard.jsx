@@ -16,6 +16,8 @@ function MainDashboard() {
   const [formattedDate, setFormattedDate] = useState(null);
   const [formattedTemp, setFormattedTemp] = useState(null);
   const [temp_unit, setTempUnit] = useState("°F");
+  const [moonPhase, setMoonPhase] = useState(null);
+  const [moonIcon, setMoonIcon] = useState(null);
 
   // Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
   useEffect(() => {
@@ -63,40 +65,77 @@ function MainDashboard() {
     getLocation();
   }, []);
   // Function to fetch weather data for the selected city (by default uses device's current location at first) fomratiing is done here as well for data=====================================>
-  useEffect(() => {
-    if (city) {
-      const fetchWeatherData = async () => {
-        setIsLoading(true);
-        try {
-          const response = await fetch(
-            `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}`
-          );
-          const data = await response.json();
-          setWeatherData(data);
-          setTimezone(data.location.tz_id);
-          setFormattedDate(
-            new Intl.DateTimeFormat("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            }).format(new Date(data.location.localtime))
-          );
-          if (temp_unit === "°F") {
-            setFormattedTemp(Math.round(data.current.temp_f));
+    useEffect(() => {
+      if (city) {
+        const fetchWeatherData = async () => {
+          setIsLoading(true);
+          try {
+            const response = await fetch(
+              `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}`
+            );
+            const data = await response.json();
+            setWeatherData(data);
+            setTimezone(data.location.tz_id);
+            setFormattedDate(
+              new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              }).format(new Date(data.location.localtime))
+            );
+            setFormattedTemp(Math.round(temp_unit === "°F" ? data.current.temp_f : data.current.temp_c));
+          } catch (error) {
+            console.error("Error fetching weather data:", error);
           }
-          if (temp_unit === "°C") {
-            setFormattedTemp(Math.round(data.current.temp_c));
+        };
+  
+        const fetchAstronomy = async () => {
+          try {
+            const response = await fetch(
+              `https://api.weatherapi.com/v1/astronomy.json?key=5289cade5c22487d92285423240707&q=${city}`
+            );
+            const data = await response.json();
+            setMoonPhase(data.astronomy.astro.moon_phase);
+            switch (data.astronomy.astro.moon_phase) {
+              case "New Moon":
+                setMoonIcon("wi-moon-new");
+                break;
+              case "Waxing Crescent":
+                setMoonIcon("wi-moon-waxing-crescent-1");
+                break;
+              case "First Quarter":
+                setMoonIcon("wi-moon-first-quarter");
+                break;
+              case "Waxing Gibbous":
+                setMoonIcon("wi-moon-waxing-gibbous-1");
+                break;
+              case "Full Moon":
+                setMoonIcon("wi-moon-full");
+                break;
+              case "Waning Gibbous":
+                setMoonIcon("wi-moon-waning-gibbous-1");
+                break;
+              case "Last Quarter":
+                setMoonIcon("wi-moon-last-quarter");
+                break;
+              case "Waning Crescent":
+                setMoonIcon("wi-moon-waning-crescent-1");
+                break;
+              default:
+                setMoonIcon(null);
+                break;
+            }
+          } catch (error) {
+            console.error("Error fetching astronomy data:", error);
           }
           setIsLoading(false);
-        } catch (error) {
-          console.error("Error fetching weather data:", error);
-          setIsLoading(false);
-        }
-      };
-      fetchWeatherData();
-    }
-  }, [city]);
-  // Function to update the local time every 2 seconds, update everytime there is a new city changed that has a different timezone==================================>
+        };
+  
+        fetchWeatherData();
+        fetchAstronomy();
+      }
+    }, [city]);
+  // Function to update the local time every 2 seconds, up(date everytime there is a new city changed that has a different timezone==================================>
   useEffect(() => {
     if (timezone) {
       const interval = setInterval(() => {
@@ -152,6 +191,12 @@ function MainDashboard() {
                     ? `${formattedTemp}${temp_unit}`
                     : "N/A"}
                 </p>
+                <div className='moon-container'>
+                  <p className='moon-phase'>
+                    <i className={`wi ${moonIcon}`}></i>
+                    {moonPhase}
+                    </p> 
+                </div>
               </div>
               <div className="current-weather-container">
                 <p className="current-weather">

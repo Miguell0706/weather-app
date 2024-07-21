@@ -60,7 +60,7 @@
 }
 .main-header h2 {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   margin: 10px;
   text-shadow: var(--text-border)
 }
@@ -88,13 +88,13 @@
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   padding: 0;
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   letter-spacing: 5px;
   text-shadow: var(--text-border)
 }
 .current-date {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1.3rem;
+  font-size: 1rem;
   width: max-content;
   margin: 0;
   letter-spacing: 3px;
@@ -113,7 +113,7 @@
   color: white;
   border: 3px solid rgba(120, 77, 77, 0.3);
   border-radius: 10px;
-  font-size: 1.1rem;
+  font-size: .8rem;
   margin: 5px;
 }
 .temp-unit-change-container button:hover {
@@ -121,15 +121,20 @@
 }
 .current-temperature {
   color: white;
-  font-size: 6rem;
+  font-size: 4rem;
   margin: 20px;
   font-weight: 700;
   text-shadow: var(--text-border); 
 }
-
+.moon-phase {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: .9rem;
+  margin-top:30px;
+  text-shadow:var(--text-border);
+}
 .current-weather {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   margin-top:10px;
   text-shadow:var(--text-border);
   display:flex;
@@ -140,13 +145,18 @@
 .current-weather-icon {
   width: 60px;
   height: 60px;
-
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .current-humidity,
 .current-wind,
 .current-uv {
   margin: 20px;
-  font-size: 1.3rem;
+  font-size: 1rem;
   text-shadow: var(--text-border);
   color: rgba(255, 255, 255, 0.8);
 }
@@ -179,7 +189,7 @@
 .hourly-condition,
 .hourly-tomorrow {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1.1rem;
+  font-size: .9rem;
   margin: 0;
   margin-top: 10px;
   text-shadow: var(--text-border);
@@ -188,7 +198,7 @@
 
 .hourly-time,
 .hourly-tomorrow {
-  font-size:1.3rem;
+  font-size:1rem;
   color: rgba(255,255,255,0.7)
 
 }
@@ -196,6 +206,12 @@
   width: 40px;
   height: 40px;
   align-self:center;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .future-forecast-container {
   margin-block: 50px;
@@ -206,7 +222,7 @@
 }
 .future-forecast-container h2 {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 10px;
   text-shadow: var(--text-border);
 }
@@ -231,14 +247,14 @@
 .weather,
 .day {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1.1rem;
+  font-size: .9rem;
   margin: 0;
   margin-top: 10px;
   text-shadow: var(--text-border);
 }
 
 .day {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
 
 }
@@ -246,4 +262,25 @@
   width: 40px;
   height: 40px;
   align-self: center;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.wi {
+  font-size: 1.6rem;
+  padding:10px;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.moon-phase i {
+  color: rgba(255,255,255,.7);
+  text-shadow: none;
 }
