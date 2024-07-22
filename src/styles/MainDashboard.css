@@ -132,6 +132,21 @@
   margin-top:30px;
   text-shadow:var(--text-border);
 }
+.wi {
+  font-size: 1.6rem;
+  padding:10px;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.moon-phase i {
+  color: rgba(255,255,255,.7);
+  text-shadow: none;
+}
+
 .current-weather {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.3rem;
@@ -295,17 +310,38 @@
   user-select: none;
 }
 
-.wi {
-  font-size: 1.6rem;
-  padding:10px;
-  pointer-events: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+
+.bottom-dashboard-opener {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: .85rem;
+  letter-spacing: 2px;
+  text-shadow: var(--text-border);
+  transition: 250ms ease-in;
+  cursor: pointer;
 }
-.moon-phase i {
-  color: rgba(255,255,255,.7);
-  text-shadow: none;
+.bottom-dashboard-opener:hover {
+  color: rgba(255, 255, 255, 1);
+}
+.bottom-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  bottom:0;
+}
+.bottom-dashboard {
+  height: 0px !important;
+  background-color: rgba(0, 0, 0, 0.7);
+  width:100%;
+  backdrop-filter: blur(10px);
+  display: flex!;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-shadow: var(--text-border);
+  
+}
+.bottom-dashboard.open {
+  height: 300px!important;
 }

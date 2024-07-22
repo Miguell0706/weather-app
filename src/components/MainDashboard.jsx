@@ -6,6 +6,7 @@ import Background from "./Background.jsx";
 import React, { useState, useEffect } from "react";
 import TempButtons from "./TempButtons.jsx";
 import UVdashboard from "./UVdashboard.jsx";
+import BottomDashboard from "./BottomDashboard.jsx";
 // BEGINING OF MAIN FUNCTION ====================================================>
 function MainDashboard() {
   const [city, setCity] = useState("");
@@ -235,6 +236,7 @@ function MainDashboard() {
         )}
         <Future24Hours temp_unit={temp_unit} city={city} />
         <FutureForecast temp_unit={temp_unit} city={city} />
+        <BottomDashboard weatherData={weatherData}/>
       </div>
     </section>
   );
