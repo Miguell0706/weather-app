@@ -160,7 +160,32 @@
   text-shadow: var(--text-border);
   color: rgba(255, 255, 255, 0.8);
 }
-
+.uv-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.uv-alert {
+  color:red;
+  font-size: 1rem;
+}
+.uv-alert:hover {
+  cursor: pointer;
+  color:rgb(184, 53, 53);
+}
+.uv-alert-text {
+  color: rgb(246, 180, 180);
+  font-size: 1rem;
+  margin: 0;
+  position: absolute;
+  top:60px;
+  left:20px;
+  text-shadow: var(--text-border);
+  z-index: 1;
+  display:none;
+}
 .future-24-hours-container {
   margin-block: 25px;
   user-select: none;

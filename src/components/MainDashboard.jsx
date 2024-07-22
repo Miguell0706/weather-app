@@ -5,7 +5,7 @@ import Search from "./search.jsx";
 import Background from "./Background.jsx";
 import React, { useState, useEffect } from "react";
 import TempButtons from "./TempButtons.jsx";
-
+import UVdashboard from "./UVdashboard.jsx";
 // BEGINING OF MAIN FUNCTION ====================================================>
 function MainDashboard() {
   const [city, setCity] = useState("");
@@ -18,7 +18,6 @@ function MainDashboard() {
   const [temp_unit, setTempUnit] = useState("°F");
   const [moonPhase, setMoonPhase] = useState(null);
   const [moonIcon, setMoonIcon] = useState(null);
-
   // Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
   useEffect(() => {
     const getLocation = () => {
@@ -156,6 +155,7 @@ function MainDashboard() {
       return () => clearInterval(interval);
     }
   }, [timezone]);
+
   // FUNCTION TO RETURN ALL THE JSX NEEDED FOR THE MAIN DASHBOARD=====================================>
   return (
     <section className="main-dashboard">
@@ -228,12 +228,7 @@ function MainDashboard() {
                     ? ` (${weatherData.current.wind_dir})`
                     : ""}
                 </p>
-                <p className="current-uv">
-                  UV Index:{" "}
-                  {weatherData.current && weatherData.current.uv
-                    ? weatherData.current.uv
-                    : "N/A"}
-                </p>
+                <UVdashboard weatherData={weatherData}/>
               </div>
             </div>
           )
