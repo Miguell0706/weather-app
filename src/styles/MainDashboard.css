@@ -126,11 +126,34 @@
   font-weight: 700;
   text-shadow: var(--text-border); 
 }
+.moon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
 .moon-phase {
   color: rgba(255, 255, 255, 0.8);
   font-size: .9rem;
-  margin-top:30px;
   text-shadow:var(--text-border);
+  margin:0;
+}
+.sunset-time {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: .9rem;
+  text-shadow:var(--text-border);
+  margin:0;
+}
+.wi-sunset {
+  font-size: 1.2rem!important;
+  color: #f8e47f;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .wi {
   font-size: 1.6rem;
@@ -191,7 +214,7 @@
   color:rgb(184, 53, 53);
 }
 .uv-alert-text {
-  color: rgb(246, 180, 180);
+  color: rgb(248, 142, 142);
   font-size: 1rem;
   margin: 0;
   position: absolute;

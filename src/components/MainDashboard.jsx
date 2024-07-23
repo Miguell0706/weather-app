@@ -19,6 +19,7 @@ function MainDashboard() {
   const [temp_unit, setTempUnit] = useState("°F");
   const [moonPhase, setMoonPhase] = useState(null);
   const [moonIcon, setMoonIcon] = useState(null);
+  const [sunsetTime, setSunsetTime] = useState(null);
   // Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
   useEffect(() => {
     const getLocation = () => {
@@ -96,6 +97,7 @@ function MainDashboard() {
             );
             const data = await response.json();
             setMoonPhase(data.astronomy.astro.moon_phase);
+            setSunsetTime(data.astronomy.astro.sunset);
             switch (data.astronomy.astro.moon_phase) {
               case "New Moon":
                 setMoonIcon("wi-moon-new");
@@ -196,7 +198,10 @@ function MainDashboard() {
                   <p className='moon-phase'>
                     <i className={`wi ${moonIcon}`}></i>
                     {moonPhase}
-                    </p> 
+                  </p>
+                  <p className='sunset-time'>
+                    <i className='wi wi-sunset'></i>{sunsetTime} (Sunset)
+                  </p> 
                 </div>
               </div>
               <div className="current-weather-container">
