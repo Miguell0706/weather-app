@@ -229,7 +229,7 @@
   user-select: none;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 250px;
+  height: 150px;
 }
 .future-24-hours-container::-webkit-scrollbar {
   display: none;
@@ -244,8 +244,8 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0),rgba(0, 0, 0, 0));
   backdrop-filter: blur(10px);
   min-width: 140px;
-  min-height: 250px;
-  max-height: 250px;
+  min-height: 180px;
+  max-height: 180px;
 }
 .hourly-time,
 .hourly-temp,
@@ -303,8 +303,8 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0),rgba(0, 0, 0, 0));
   backdrop-filter: blur(10px);
   min-width: 185px;
-  min-height: 200px;
-  max-height: 200px;
+  min-height: 150px;
+  max-height: 150px;
 }
 .temperature,
 .weather,
@@ -352,6 +352,7 @@
   width: 100%;
   position: fixed;
   bottom:0;
+  
 }
 .bottom-dashboard {
   height: 0px !important;
@@ -361,10 +362,51 @@
   display: flex!;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-shadow: var(--text-border);
+  overflow: hidden;
   
 }
 .bottom-dashboard.open {
   height: 300px!important;
+}
+.topic-selector {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+}
+
+.topic-selector button {
+  cursor: pointer;
+  flex-grow: 1;
+  color:rgb(128, 113, 113);
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  font-size: .9rem;
+  transition: 250ms ease-in;
+  text-shadow: var(--text-border);
+}
+
+.topic-selector button.active {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.air-quality-container,
+.news-container,
+.flights-container {
+  width:100%;
+  padding: 10px;
+  color:white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: scroll;
+}
+.air-quality-container::-webkit-scrollbar,
+.flights-container::-webkit-scrollbar,
+.news-container::-webkit-scrollbar {
+  display: none;
 }

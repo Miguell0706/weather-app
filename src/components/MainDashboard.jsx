@@ -23,6 +23,7 @@ function MainDashboard() {
   // Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
   useEffect(() => {
     const getLocation = () => {
+      console.log("Getting location...");
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -72,7 +73,7 @@ function MainDashboard() {
           setIsLoading(true);
           try {
             const response = await fetch(
-              `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}`
+              `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}&aqi=yes`
             );
             const data = await response.json();
             setWeatherData(data);
