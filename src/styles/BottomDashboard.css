@@ -1,0 +1,111 @@
+.bottom-dashboard-opener {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: .85rem;
+    letter-spacing: 2px;
+    text-shadow: var(--text-border);
+    transition: 250ms ease-in;
+    cursor: pointer;
+  }
+  .bottom-dashboard-opener:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  .bottom-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    bottom:0;
+    
+  }
+  .bottom-dashboard {
+    height: 0px !important;
+    background-color: rgba(0, 0, 0, 0.7);
+    width:100%;
+    backdrop-filter: blur(10px);
+    display: flex!;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-shadow: var(--text-border);
+    overflow: hidden;
+    
+  }
+  .bottom-dashboard.open {
+    height: 300px!important;
+  }
+  .topic-selector {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  
+  }
+  
+  .topic-selector button {
+    cursor: pointer;
+    flex-grow: 1;
+    color:rgb(128, 113, 113);
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    font-size: .9rem;
+    transition: 250ms ease-in;
+    text-shadow: var(--text-border);
+  }
+  
+  .topic-selector button.active {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+  
+  .air-quality-container,
+  .news-container,
+  .flights-container {
+    width:100%;
+    padding: 10px;
+    color:white;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    overflow-y: scroll;
+  }
+  .air-quality-container::-webkit-scrollbar,
+  .flights-container::-webkit-scrollbar,
+  .news-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .air-quality-pollutants {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size:1.5rem;
+    text-shadow: var(--text-border);
+  }
+  .air-quality-pollutant{
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    font-size: .9rem;
+    transition: 250ms ease-in;
+    text-shadow: var(--text-border);
+  }
+  .air-quality-pollutant:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+  
+  .air-quality-pollutant.active {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+.pollutant-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: .8rem;
+  text-shadow: var(--text-border);
+}
