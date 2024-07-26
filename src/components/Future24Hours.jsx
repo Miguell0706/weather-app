@@ -162,6 +162,7 @@ function Future24Hours({ city, temp_unit }) {
               <p className="hourly-temp" data-temp-f={hourData.temp_f}>
                 {convertTemperature(hourData.temp_f)}
               </p>
+              <p className='hourly-humidity'>Humidity:{hourData.humidity}%</p>
               <p className='hourly-condition'>{hourData.condition.text}</p>
               <img className='hourly-icon' src={hourData.condition.icon}></img>
             </div>

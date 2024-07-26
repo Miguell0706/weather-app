@@ -31,6 +31,7 @@ function FutureForecast({ city, temp_unit }) {
       fetchForecast();
     }
   }, [city]);
+
   useEffect(() => {
     const attachEventListeners = () => {
       const future_forecast_container = containerRef.current;
@@ -84,10 +85,7 @@ function FutureForecast({ city, temp_unit }) {
             "mouseleave",
             mouseLeaveHandler
           );
-          future_forecast_container.removeEventListener(
-            "mouseup",
-            mouseUpHandler
-          );
+          future_forecast_container.removeEventListener("mouseup", mouseUpHandler);
           future_forecast_container.removeEventListener(
             "mousemove",
             mouseMoveHandler
@@ -100,14 +98,6 @@ function FutureForecast({ city, temp_unit }) {
 
     return () => clearTimeout(timeoutId);
   }, [containerRef]);
-  useEffect(() => {
-    let temps = document.querySelectorAll(".temperature");
-
-    temps.forEach((temp) => {
-      const tempF = parseFloat(temp.dataset.tempF);
-      temp.textContent = `${convertTemperature(tempF)}`;
-    });
-  }, [temp_unit]);
 
   const convertTemperature = (tempF) => {
     switch (temp_unit) {
@@ -117,6 +107,15 @@ function FutureForecast({ city, temp_unit }) {
         return `${Math.round(tempF)} °F`;
     }
   };
+
+  const getTemperatureText = (maxTempF, minTempF) => {
+    return (
+      <>
+        {'high: '}{convertTemperature(maxTempF)} <br /> {'low: '}{convertTemperature(minTempF)}
+      </>
+    );
+  };
+
   return (
     <div className="future-forecast-container" ref={containerRef}>
       <h2>5-Day Forecast for {city}</h2>
@@ -131,11 +130,11 @@ function FutureForecast({ city, temp_unit }) {
                   weekday: "long",
                 })}
               </p>
-              <p className="temperature" data-temp-f={day.day.avgtemp_f}>
-                {convertTemperature(day.day.avgtemp_f)}
+              <p className="temperature">
+                {getTemperatureText(day.day.maxtemp_f, day.day.mintemp_f)}
               </p>
               <p className="weather">{day.day.condition.text}</p>
-              <img className='daily-icon' src={day.day.condition.icon}></img>
+              <img className="daily-icon" src={day.day.condition.icon} alt={day.day.condition.text}></img>
             </div>
           ))}
         </div>
@@ -143,4 +142,5 @@ function FutureForecast({ city, temp_unit }) {
     </div>
   );
 }
+
 export default FutureForecast;

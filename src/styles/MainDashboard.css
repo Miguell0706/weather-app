@@ -229,7 +229,7 @@
   user-select: none;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 150px;
+  height: 200px;
 }
 .future-24-hours-container::-webkit-scrollbar {
   display: none;
@@ -244,13 +244,14 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0),rgba(0, 0, 0, 0));
   backdrop-filter: blur(10px);
   min-width: 140px;
-  min-height: 180px;
-  max-height: 180px;
+  min-height: 250px;
+  max-height: 250px;
 }
 .hourly-time,
 .hourly-temp,
 .hourly-condition,
-.hourly-tomorrow {
+.hourly-tomorrow,
+.hourly-humidity {
   color: rgba(255, 255, 255, 0.9);
   font-size: .9rem;
   margin: 0;
@@ -264,6 +265,10 @@
   font-size:1rem;
   color: rgba(255,255,255,0.7)
 
+}
+.hourly-humidity {
+  font-size:.9rem;
+  color:rgb(190, 206, 220)
 }
 .hourly-icon {
   width: 40px;
@@ -303,8 +308,8 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0),rgba(0, 0, 0, 0));
   backdrop-filter: blur(10px);
   min-width: 185px;
-  min-height: 150px;
-  max-height: 150px;
+  min-height: 190px;
+  max-height: 190px;
 }
 .temperature,
 .weather,
