@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AirQuality from './AirQuality';
 import News from './News';
-import Flights from './Flights';
 
 function BottomDashboard({ weatherData }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,8 +16,6 @@ function BottomDashboard({ weatherData }) {
         return <AirQuality weatherData={weatherData}/>;
       case 'News':
         return <News weatherData={weatherData}/>;
-      case 'Flights':
-        return <Flights weatherData={weatherData}/>;
       default:
         return null;
     }
@@ -37,7 +34,6 @@ function BottomDashboard({ weatherData }) {
         <div className='topic-selector'>
           <button className={activeTab === 'Air-quality' ? 'active' : ''} onClick={() => setActiveTab('Air-quality')}>Air quality</button>
           <button className={activeTab === 'News' ? 'active' : ''} onClick={() => setActiveTab('News')}>News</button>
-          <button className={activeTab === 'Flights' ? 'active' : ''} onClick={() => setActiveTab('Flights')}>Flights</button>
         </div>
         {renderContent()}
       </div>
