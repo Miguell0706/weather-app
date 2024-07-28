@@ -266,7 +266,8 @@
   color: rgba(255,255,255,0.7)
 
 }
-.hourly-humidity {
+.hourly-humidity,
+.daily-humidity {
   font-size:.9rem;
   color:rgb(190, 206, 220)
 }
@@ -311,17 +312,21 @@
   min-height: 190px;
   max-height: 190px;
 }
-.temperature,
-.weather,
-.day {
+.daily-temperature,
+.daily-weather,
+.day,
+.daily-humidity {
   color: rgba(255, 255, 255, 0.9);
   font-size: .9rem;
   margin: 0;
   margin-top: 10px;
   text-shadow: var(--text-border);
 }
+.daily-humidity {
+  color:rgb(190, 206, 220)
+}
 
-.day {
+.daily-day {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
 

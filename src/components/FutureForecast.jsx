@@ -130,10 +130,11 @@ function FutureForecast({ city, temp_unit }) {
                   weekday: "long",
                 })}
               </p>
-              <p className="temperature">
+              <p className="daily-temperature">
                 {getTemperatureText(day.day.maxtemp_f, day.day.mintemp_f)}
               </p>
-              <p className="weather">{day.day.condition.text}</p>
+              <p className='daily-humidity'>Humidity: {day.day.avghumidity}%</p>
+              <p className="daily-weather">{day.day.condition.text}</p>
               <img className="daily-icon" src={day.day.condition.icon} alt={day.day.condition.text}></img>
             </div>
           ))}
