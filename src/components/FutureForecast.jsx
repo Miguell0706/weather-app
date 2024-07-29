@@ -14,7 +14,7 @@ function FutureForecast({ city, temp_unit }) {
         setIsLoading(true);
         try {
           const response = await fetch(
-            `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=7`
+            `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&days=7`
           );
           if (!response.ok) {
             throw new Error("Network response was not ok");

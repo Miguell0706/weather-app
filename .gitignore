@@ -22,6 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env
 /src/assets/*.mp4
 src/assets/Backgrounds/Blizzard.mp4
 src/assets/Backgrounds/BlowingSnow.mp4

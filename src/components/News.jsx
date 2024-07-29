@@ -8,7 +8,7 @@ function News({ weatherData }) {
         const fetchNews = async () => {
             const city = encodeURIComponent(weatherData.location.name)+' city';
             const url = `https://api.worldnewsapi.com/search-news?text=${city}&language=en`;
-            const apiKey = '0fffd740fd7846b08f83edc0a56402a5';
+            const apiKey = import.meta.env.VITE_NEWS_API_KEY;
 
             try {
                 const response = await fetch(url, {

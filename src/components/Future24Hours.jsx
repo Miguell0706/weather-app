@@ -15,7 +15,7 @@ function Future24Hours({ city, temp_unit }) {
         setIsLoading(true);
         try {
           const response = await fetch(
-            `https://api.weatherapi.com/v1/forecast.json?key=5289cade5c22487d92285423240707&q=${city}&days=2`
+            `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&days=2`
           );
           const data = await response.json();
           setTodaysDate(data.forecast.forecastday[0].date);

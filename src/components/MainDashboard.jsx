@@ -47,7 +47,7 @@ function MainDashboard() {
           }
         );
         async function getCityName(latitude, longitude) {
-          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=1a67db714c05480c942b29d94e07952b`;
+          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${import.meta.env.VITE_GEO_API_KEY}`;
           let response = await fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -73,7 +73,7 @@ function MainDashboard() {
           setIsLoading(true);
           try {
             const response = await fetch(
-              `https://api.weatherapi.com/v1/current.json?key=5289cade5c22487d92285423240707&q=${city}&aqi=yes`
+              `https://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&aqi=yes`
             );
             const data = await response.json();
             setWeatherData(data);
@@ -94,7 +94,7 @@ function MainDashboard() {
         const fetchAstronomy = async () => {
           try {
             const response = await fetch(
-              `https://api.weatherapi.com/v1/astronomy.json?key=5289cade5c22487d92285423240707&q=${city}`
+              `https://api.weatherapi.com/v1/astronomy.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}`
             );
             const data = await response.json();
             setMoonPhase(data.astronomy.astro.moon_phase);
