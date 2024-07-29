@@ -28,22 +28,19 @@ The Weather Dashboard is a web application designed to provide real-time weather
    ```
 Navigate to the project directory:
 
-bash
-Copy code
+
 ```
 cd weather-dashboard
 ```
 Install dependencies:
 
-bash
-Copy code
+
 ```
 npm install
 ```
 Start the development server:
 
-bash
-Copy code
+
 ```
 npm run dev
 ```
@@ -79,6 +76,8 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Acknowledgments
-Weather API - for providing weather data.
-Open Cage API - for converting long and lat coordinates into a city 
-World News API - for providing news updates.
+Weather API - for providing weather data. https://www.weatherapi.com/
+
+Open Cage API - for converting long and lat coordinates into a city   https://opencagedata.com/
+
+World News API - for providing news updates. https://worldnewsapi.com/
