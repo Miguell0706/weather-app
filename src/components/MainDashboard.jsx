@@ -47,7 +47,7 @@ function MainDashboard() {
           }
         );
         async function getCityName(latitude, longitude) {
-          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${import.meta.env.VITE_GEO_API_KEY}`;
+          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${import.meta.env.VITE_OPEN_CAGE_API_KEY}`;
           let response = await fetch(url)
             .then((response) => response.json())
             .then((data) => {
