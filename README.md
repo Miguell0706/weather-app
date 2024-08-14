@@ -1,5 +1,5 @@
 # Weather Dashboard
-
+ Link for deployed app https://miguels-weather-app.netlify.app/
 ## Overview
 
 The Weather Dashboard is a web application designed to provide real-time weather updates and detailed information for any city. The app features dynamic background updates based on weather conditions, pollutant summaries, and news about the selected city.
