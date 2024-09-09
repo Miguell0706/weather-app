@@ -22,122 +22,131 @@ function MainDashboard() {
   const [moonIcon, setMoonIcon] = useState(null);
   const [sunsetTime, setSunsetTime] = useState(null);
   // Function to get the city name from latitude and longitude OF DEVICE'S LOCATION======================================
+
   useEffect(() => {
-    const getLocation = () => {
+    const getLocation = async () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            (async () => {
-              const latitude = position.coords.latitude;
-              const longitude = position.coords.longitude;
-              try {
-                const city = await getCityName(latitude, longitude);
-                setCity(city);
-              } catch (error) {
-                console.error("Error:", error);
-              }
-            })();
+          async (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            try {
+              const cityName = await getCityName(latitude, longitude);
+              setCity(cityName);
+            } catch (error) {
+              console.error("Error fetching city name:", error);
+            }
           },
           (error) => {
             console.error("Error getting location:", error);
           },
           {
-            enableHighAccuracy: true, // Request high accuracy mode
-            maximumAge: 0, // Do not use cached location
+            enableHighAccuracy: true,
+            maximumAge: 0,
           }
         );
-        async function getCityName(latitude, longitude) {
-          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${import.meta.env.VITE_OPEN_CAGE_API_KEY}`;
-          let response = await fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              const cityName = data.results[0].components.city;
-              return cityName;
-            })
-            .catch((error) => {
-              return "Error";
-            });
-          return response;
-        }
       } else {
         console.error("Geolocation is not supported by this browser.");
-        console.log("location denied");
       }
     };
+
+    const getCityName = async (latitude, longitude) => {
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${
+        import.meta.env.VITE_OPEN_CAGE_API_KEY
+      }`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const cityName = data.results[0]?.components?.city || "City not found";
+        return cityName;
+      } catch (error) {
+        console.error("Error fetching city name:", error);
+        return "Error";
+      }
+    };
+
     getLocation();
   }, []);
   // Function to fetch weather data for the selected city (by default uses device's current location at first) fomratiing is done here as well for data=====================================>
-    useEffect(() => {
-      if (city) {
-        const fetchWeatherData = async () => {
-          setIsLoading(true);
-          try {
-            const response = await fetch(
-              `https://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&aqi=yes`
-            );
-            const data = await response.json();
-            setWeatherData(data);
-            setTimezone(data.location.tz_id);
-            setFormattedDate(
-              new Intl.DateTimeFormat("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }).format(new Date(data.location.localtime))
-            );
-            setFormattedTemp(Math.round(temp_unit === "°F" ? data.current.temp_f : data.current.temp_c));
-          } catch (error) {
-            console.error("Error fetching weather data:", error);
+  useEffect(() => {
+    if (city) {
+      const fetchWeatherData = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${
+              import.meta.env.VITE_WEATHER_API_KEY
+            }&q=${city}&aqi=yes`
+          );
+          const data = await response.json();
+          setWeatherData(data);
+          setTimezone(data.location.tz_id);
+          setFormattedDate(
+            new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }).format(new Date(data.location.localtime))
+          );
+          setFormattedTemp(
+            Math.round(
+              temp_unit === "°F" ? data.current.temp_f : data.current.temp_c
+            )
+          );
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        }
+      };
+
+      const fetchAstronomy = async () => {
+        try {
+          const response = await fetch(
+            `https://api.weatherapi.com/v1/astronomy.json?key=${
+              import.meta.env.VITE_WEATHER_API_KEY
+            }&q=${city}`
+          );
+          const data = await response.json();
+          setMoonPhase(data.astronomy.astro.moon_phase);
+          setSunsetTime(data.astronomy.astro.sunset);
+          switch (data.astronomy.astro.moon_phase) {
+            case "New Moon":
+              setMoonIcon("wi-moon-new");
+              break;
+            case "Waxing Crescent":
+              setMoonIcon("wi-moon-waxing-crescent-1");
+              break;
+            case "First Quarter":
+              setMoonIcon("wi-moon-first-quarter");
+              break;
+            case "Waxing Gibbous":
+              setMoonIcon("wi-moon-waxing-gibbous-1");
+              break;
+            case "Full Moon":
+              setMoonIcon("wi-moon-full");
+              break;
+            case "Waning Gibbous":
+              setMoonIcon("wi-moon-waning-gibbous-1");
+              break;
+            case "Last Quarter":
+              setMoonIcon("wi-moon-last-quarter");
+              break;
+            case "Waning Crescent":
+              setMoonIcon("wi-moon-waning-crescent-1");
+              break;
+            default:
+              setMoonIcon(null);
+              break;
           }
-        };
-  
-        const fetchAstronomy = async () => {
-          try {
-            const response = await fetch(
-              `https://api.weatherapi.com/v1/astronomy.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}`
-            );
-            const data = await response.json();
-            setMoonPhase(data.astronomy.astro.moon_phase);
-            setSunsetTime(data.astronomy.astro.sunset);
-            switch (data.astronomy.astro.moon_phase) {
-              case "New Moon":
-                setMoonIcon("wi-moon-new");
-                break;
-              case "Waxing Crescent":
-                setMoonIcon("wi-moon-waxing-crescent-1");
-                break;
-              case "First Quarter":
-                setMoonIcon("wi-moon-first-quarter");
-                break;
-              case "Waxing Gibbous":
-                setMoonIcon("wi-moon-waxing-gibbous-1");
-                break;
-              case "Full Moon":
-                setMoonIcon("wi-moon-full");
-                break;
-              case "Waning Gibbous":
-                setMoonIcon("wi-moon-waning-gibbous-1");
-                break;
-              case "Last Quarter":
-                setMoonIcon("wi-moon-last-quarter");
-                break;
-              case "Waning Crescent":
-                setMoonIcon("wi-moon-waning-crescent-1");
-                break;
-              default:
-                setMoonIcon(null);
-                break;
-            }
-          } catch (error) {
-            console.error("Error fetching astronomy data:", error);
-          }
-          setIsLoading(false);
-        };
-  
-        fetchWeatherData();
-        fetchAstronomy();
-      }
-    }, [city]);
+        } catch (error) {
+          console.error("Error fetching astronomy data:", error);
+        }
+        setIsLoading(false);
+      };
+
+      fetchWeatherData();
+      fetchAstronomy();
+    }
+  }, [city]);
   // Function to update the local time every 2 seconds, up(date everytime there is a new city changed that has a different timezone==================================>
   useEffect(() => {
     if (timezone) {
@@ -195,14 +204,15 @@ function MainDashboard() {
                     ? `${formattedTemp}${temp_unit}`
                     : "N/A"}
                 </p>
-                <div className='moon-container'>
-                  <p className='moon-phase'>
+                <div className="moon-container">
+                  <p className="moon-phase">
                     <i className={`wi ${moonIcon}`}></i>
                     {moonPhase}
                   </p>
-                  <p className='sunset-time'>
-                    <i className='wi wi-sunset'></i>{sunsetTime} (Sunset)
-                  </p> 
+                  <p className="sunset-time">
+                    <i className="wi wi-sunset"></i>
+                    {sunsetTime} (Sunset)
+                  </p>
                 </div>
               </div>
               <div className="current-weather-container">
@@ -212,7 +222,7 @@ function MainDashboard() {
                       <img
                         src={`https:${weatherData.current.condition.icon}`}
                         alt="Weather Icon"
-                        className='current-weather-icon'
+                        className="current-weather-icon"
                       />
                       {weatherData.current.condition.text}
                     </>
@@ -235,14 +245,14 @@ function MainDashboard() {
                     ? ` (${weatherData.current.wind_dir})`
                     : ""}
                 </p>
-                <UVdashboard weatherData={weatherData}/>
+                <UVdashboard weatherData={weatherData} />
               </div>
             </div>
           )
         )}
         <Future24Hours temp_unit={temp_unit} city={city} />
         <FutureForecast temp_unit={temp_unit} city={city} />
-        <BottomDashboard weatherData={weatherData}/>
+        <BottomDashboard weatherData={weatherData} />
       </div>
     </section>
   );
